@@ -8,7 +8,7 @@ Data
 
 **Data after pre-processing**
 
- -  useable faces: 2109
+ - useable faces: 2109
  - identities: 24
  - age groups: 4
  - splits (each split in 80% training of each category, remaining 20% are hold out for testing, instances are randomly selected)

@@ -22,10 +22,11 @@ function demo_chimp_loading
         s_destData       = sprintf( '%s/datasets_cropped_chimpanzee_faces/data_CTai/', s_dest_root );
     end
 
-    settingsLoad.b_load_age          = true;
-    settingsLoad.b_load_gender       = true;
-    settingsLoad.b_load_age_group    = true;
-    settingsLoad.b_load_identity     = true;
+    settingsLoad.b_load_age                      = true;
+    settingsLoad.b_load_gender                   = true;
+    settingsLoad.b_load_age_group                = true;
+    settingsLoad.b_load_identity                 = true;
+    settingsLoad.b_load_keypoint_information     = true;
     dataset_chimpansees              = load_chimpansees( s_destData, settingsLoad );
 
     dataset_splits = {};
@@ -47,7 +48,6 @@ function demo_chimp_loading
 
         % these are the file names to the cropped images, i.e., they only
         % contain bounding boxes of the ape's faces
-        % see mail of beginning of feb.
         s_fn_images_train = dataset_chimpansees.s_images( idxTrain );
         s_fn_images_test  = dataset_chimpansees.s_images( idxTest );
 

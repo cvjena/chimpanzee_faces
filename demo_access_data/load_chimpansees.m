@@ -9,16 +9,28 @@ function dataset_chimpansees = load_chimpansees ( s_destData, settings )
 %      .b_load_age_group    - default: true, requires s_destData/age_group_information.mat
 %      .b_load_identity     - default: true, requires s_destData/identity_information.mat
 %      .b_load_image_fns    - default: true, requires s_destData/filelist_face_images.txt
+%      .b_load_keypoint_information
+%                           - default: true, requires s_destData/keypoint_information.mat
 % 
 % OUTPUT:
-%     dataset_chimpansees   - struct with optional fields
-%      .f_ages              - only if b_load_age, double vector     
-%      .b_genders           - only if b_load_gender, boolean vector
-%      .b_age_groups        - only if b_load_age_group, boolean vector    
-%      .f_labels            - only if b_load_identity, double vector     
-%      .s_all_datasets      - only if b_load_dataset_name, cell array of strings
-%      .s_images            - only if b_load_image_fns, cell array of strings
-%      .b_idxValid          - boolean vector
+%     dataset_chimpansees     - struct with optional fields
+%      .f_ages                - only if b_load_age, double vector     
+%
+%      .f_genders             - only if b_load_gender, f_genders vector
+%      .s_all_genders         - only if b_load_gender, cell array of strings
+%
+%      .f_age_groups          - only if b_load_age_group, f_genders vector    
+%      .s_possible_age_groups - only if b_load_age_group, cell array of strings
+%
+%      .f_labels              - only if b_load_identity, double vector     
+%      .s_all_identities      - only if b_load_identity, cell array of strings
+%
+%      .s_images              - only if b_load_image_fns, cell array of strings
+%
+%      .f_keypoints           - only if b_load_keypoint_information, double kx10 array
+%      .s_possible_keypoints  - only if b_load_keypoint_information, cell array of strings
+%
+%      .b_idxValid            - boolean vector
 
     
     if ( nargin < 1 )
@@ -27,11 +39,13 @@ function dataset_chimpansees = load_chimpansees ( s_destData, settings )
     
     %% load previously curated data
     
-    b_load_age                 = getFieldWithDefault ( settings, 'b_load_age',          true );
-    b_load_gender              = getFieldWithDefault ( settings, 'b_load_gender',       true );
-    b_load_age_group           = getFieldWithDefault ( settings, 'b_load_age_group',    true );
-    b_load_identity            = getFieldWithDefault ( settings, 'b_load_identity',     true );
-    b_load_image_fns           = getFieldWithDefault ( settings, 'b_load_image_fns',    true );   
+    b_load_age                  = getFieldWithDefault ( settings, 'b_load_age',                    true );
+    b_load_gender               = getFieldWithDefault ( settings, 'b_load_gender',                 true );
+    b_load_age_group            = getFieldWithDefault ( settings, 'b_load_age_group',              true );
+    b_load_identity             = getFieldWithDefault ( settings, 'b_load_identity',               true );
+    b_load_image_fns            = getFieldWithDefault ( settings, 'b_load_image_fns',              true );   
+    b_load_keypoint_information = getFieldWithDefault ( settings, 'b_load_keypoint_information',   true );   
+    
     
     if ( b_load_age )
         ageInfo                = load( sprintf( '%sage_information.mat', s_destData ) );
@@ -48,6 +62,11 @@ function dataset_chimpansees = load_chimpansees ( s_destData, settings )
     if ( b_load_identity )    
         identity_information   = load( sprintf( '%sidentity_information.mat', s_destData ) );    
     end
+    
+    if ( b_load_keypoint_information )    
+        keypoint_information   = load( sprintf( '%skeypoint_information.mat', s_destData ) );    
+    end    
+    
     
 
     if ( b_load_image_fns ) 
@@ -103,32 +122,37 @@ function dataset_chimpansees = load_chimpansees ( s_destData, settings )
     dataset_chimpansees  = [];
     
     if ( b_load_age )
-        dataset_chimpansees.f_ages           = ageInfo.f_ages;        
+        dataset_chimpansees.f_ages               = ageInfo.f_ages;        
     end    
 
     if ( b_load_gender )
-        dataset_chimpansees.f_genders        = genderInfo.f_genders;  
-        dataset_chimpansees.s_all_genders    = genderInfo.s_all_genders;  
+        dataset_chimpansees.f_genders            = genderInfo.f_genders;  
+        dataset_chimpansees.s_all_genders        = genderInfo.s_all_genders;  
         
     end    
     
     if ( b_load_age_group )
         dataset_chimpansees.s_possible_age_groups ...
-                                             = ageGroupInfo.s_possible_age_groups;
-        dataset_chimpansees.f_labels_age_groups  ...
-                                             = ageGroupInfo.f_labels_age_groups;        
+                                                 = ageGroupInfo.s_possible_age_groups;
+        dataset_chimpansees.f_age_groups  ...
+                                                 = ageGroupInfo.f_labels_age_groups;        
     end
     
     if ( b_load_identity )
-        dataset_chimpansees.f_labels         = identity_information.f_labels;        
-        dataset_chimpansees.s_all_identities = identity_information.s_all_identities;        
+        dataset_chimpansees.f_labels             = identity_information.f_labels;        
+        dataset_chimpansees.s_all_identities     = identity_information.s_all_identities;        
     end
     
     if ( b_load_image_fns )
-        dataset_chimpansees.s_images         = s_images;
+        dataset_chimpansees.s_images             = s_images;
     end
+    
+    if ( b_load_keypoint_information )
+        dataset_chimpansees.f_keypoints          = keypoint_information.f_keypoints;
+        dataset_chimpansees.s_possible_keypoints = keypoint_information.s_possible_keypoints;
+    end    
      
-    dataset_chimpansees.b_idxValid           = b_idxValid;  
+    dataset_chimpansees.b_idxValid               = b_idxValid;  
 
 
 end
