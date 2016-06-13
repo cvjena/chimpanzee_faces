@@ -23,11 +23,45 @@ We provide five splits intro train and test which have been used to produce the 
 
 HOW TO ACCESS
 =========
+
+Access via Matlab (recommended)
+-------------------------------
+
 We provided a tiny matlab script which loads one of the datasets, requests the splits, and loops through the images. Depending on your needs, you might want to use this as a starting point for your own evaluations.
 >cd demo_access_data/  
 >demo_chimp_loading  
 
 ![Results of our attribute prediction models](http://www.inf-cv.uni-jena.de/dbvmedia/de/Research/Fine_grained+Recognition/Freytag16_CFW_teaser_wide.png)
+
+Access via Textfiles (not recommended)
+-------------------------------
+For persons without access to Matlab, we additionally provide the entire set of attributes in a separate text file for each dataset. To read all data, go to the dataset directory:
+
+> cd datasets_cropped_chimpanzee_faces/data_CZoo/   
+
+and look into the provided annotations file:
+>vim annotations_czoo.txt
+
+Layout of the annotations is as follows. 
+
+ - all information for a single image in one line
+ - fields are separated by white space
+ - linebreak is done by \n
+ - Keypoints are given as (x-coordinate y-coordinate) pairs
+
+Order of fields is
+
+ 1. Filename *(string)*
+ 2. Age *(float, NaN if unavailable)*
+ 3. Age_Group *(string, Unknown if unavailable)*
+ 4. Gender *(string, Unknown if unavailable)*
+ 5. Keypoint RightEye *(int, Inf if unavailable)*
+ 6. Keypoint LeftEye *(int, Inf if unavailable)*
+ 7. Keypoint MouthCenter *(int, Inf if unavailable)*
+ 8. Keypoint LeftEarlobe *(int, Inf if unavailable)*
+ 9. Keypoint RightEarlobe *(int, Inf if unavailable)*
+
+
 
 ACKNOWLEDGEMENTS
 =========

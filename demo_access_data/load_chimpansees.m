@@ -31,6 +31,10 @@ function dataset_chimpansees = load_chimpansees ( s_destData, settings )
 %      .s_possible_keypoints  - only if b_load_keypoint_information, cell array of strings
 %
 %      .b_idxValid            - boolean vector
+% 
+% AUTHOR
+%      Alexander Freytag
+% 
 
     
     if ( nargin < 1 )
